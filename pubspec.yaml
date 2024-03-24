@@ -10,6 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
+  get: ^4.6.6
+  get_it: ^7.6.7
+  gap: ^3.0.1
+  eva_icons_flutter: ^3.1.0
 
 dev_dependencies:
   flutter_test:
