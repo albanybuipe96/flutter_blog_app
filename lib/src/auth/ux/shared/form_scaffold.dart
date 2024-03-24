@@ -22,26 +22,26 @@ class FormScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Utils.hideStatusBar();
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(topBarHeight ?? 55),
-        child: appBar ?? _sizedBox,
-      ),
-      body: GestureDetector(
-        onTap: () {
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        child: Form(
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(topBarHeight ?? 55),
+          child: appBar ?? _sizedBox,
+        ),
+        body: Form(
           key: key,
           child: Padding(
             padding: padding ?? EdgeInsets.zero,
             child: body,
           ),
         ),
+        bottomNavigationBar:
+            bottomNavBar != null ? BottomAppBar(child: bottomNavBar) : null,
       ),
-      bottomNavigationBar:
-          bottomNavBar != null ? BottomAppBar(child: bottomNavBar) : null,
     );
   }
 
