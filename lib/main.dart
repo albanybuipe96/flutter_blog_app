@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/core/resources/theme.dart';
+import 'package:flutter_blog_app/src/auth/ux/screens/signup/signup_screen.dart';
+import 'package:flutter_blog_app/src/shared/di.dart';
+import 'package:get/get.dart';
 
-void main() {
+Future<void> main() async {
+  await Di.init();
   runApp(const MyApp());
 }
 
@@ -9,14 +14,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Placeholder(color: Colors.blue, child: Center(child: Text('Placeholder')),),
+      themeMode: AppTheme.darkMode,
+      theme: AppTheme.dark,
+      home: SignupScreen(),
     );
   }
 }
