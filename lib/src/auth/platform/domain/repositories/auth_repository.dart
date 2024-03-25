@@ -1,4 +1,4 @@
-import 'package:flutter_blog_app/core/errors/failure.dart';
+import 'package:flutter_blog_app/core/errors/failures/failure.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract interface class AuthRepository {
