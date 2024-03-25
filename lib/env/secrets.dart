@@ -11,7 +11,4 @@ class Secrets {
 
   @EnviedField()
   static String SUPABASE_ANON_KEY = _Secrets.SUPABASE_ANON_KEY;
-
-  @EnviedField()
-  static String SUPABASE_DB_PASSWORD = _Secrets.SUPABASE_DB_PASSWORD;
 }
