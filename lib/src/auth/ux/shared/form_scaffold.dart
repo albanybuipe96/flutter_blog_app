@@ -32,12 +32,9 @@ class FormScaffold extends StatelessWidget {
           preferredSize: Size.fromHeight(topBarHeight ?? 55),
           child: appBar ?? _sizedBox,
         ),
-        body: Form(
-          key: key,
-          child: Padding(
-            padding: padding ?? EdgeInsets.zero,
-            child: body,
-          ),
+        body: Padding(
+          padding: padding ?? EdgeInsets.zero,
+          child: body,
         ),
         bottomNavigationBar:
             bottomNavBar != null ? BottomAppBar(child: bottomNavBar) : null,
