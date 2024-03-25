@@ -6,6 +6,8 @@ import 'package:flutter_blog_app/core/ux/widgets/input_field.dart';
 import 'package:flutter_blog_app/src/auth/resources/auth_resources.dart';
 import 'package:flutter_blog_app/src/auth/ux/screens/signup/signup_screen_state.dart';
 import 'package:flutter_blog_app/src/auth/ux/shared/form_scaffold.dart';
+import 'package:flutter_blog_app/src/auth/ux/shared/form_validator.dart';
+import 'package:flutter_blog_app/src/shared/nav_graph.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
@@ -20,7 +22,6 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormScaffold(
       padding: const EdgeInsets.all(Dimens.nano),
-      key: key,
       body: _form,
     );
   }
