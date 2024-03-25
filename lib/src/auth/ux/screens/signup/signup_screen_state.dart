@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignupScreenState extends GetxController {
   final emailController = TextEditingController();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
   final isPassword = true.obs;
   final loading = false.obs;
@@ -14,28 +15,24 @@ class SignupScreenState extends GetxController {
     isPassword.value = isPassword.toggle()();
   }
 
-  void toggleEnabled() {
-    enabled.value = enabled.toggle()();
-  }
-
-  void toggleLoading() {
-    loading.value = loading.toggle()();
-  }
-
   Future<void> signup() async {
-    if (usernameController.text.isEmpty ||
-        emailController.text.isEmpty ||
-        passwordController.text.isEmpty) {
-      return;
+    if (signupFormKey.currentState!.validate()) {
+      loading.value = true;
+      enabled.value = false;
+
+      await Future.delayed(const Duration(seconds: 2), () {
+        loading.value = false;
+        enabled.value = true;
+      });
     }
+  }
 
-    loading.value = true;
-    enabled.value = false;
-
-    await Future.delayed(const Duration(seconds: 2), () {
-      loading.value = false;
-      enabled.value = true;
-    });
+  @override
+  void onInit() {
+    usernameController.addListener(() {});
+    emailController.addListener(() {});
+    passwordController.addListener(() {});
+    super.onInit();
   }
 
   @override
