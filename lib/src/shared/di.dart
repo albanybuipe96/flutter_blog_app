@@ -6,6 +6,7 @@ import 'package:flutter_blog_app/src/auth/platform/data/sources/auth_data_source
 import 'package:flutter_blog_app/src/auth/platform/data/sources/remote/auth_remote_data_source.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/repositories/auth_repository.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signup_usecase.dart';
+import 'package:flutter_blog_app/src/auth/ux/blocs/auth_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -28,24 +29,27 @@ class Di {
   static Future<void> _injector() async {
     final client = (await Di.initSupabase()).client;
     serviceLocator
-      ..registerFactory(
-        () => (
-          useCase: SignupUseCase(
-            repository: serviceLocator(),
-          ),
+      ..registerLazySingleton(
+        () => AuthBloc(
+          signupUseCase: serviceLocator(),
         ),
       )
-      ..registerLazySingleton<AuthRepository>(
+      ..registerFactory(
+        () => SignupUseCase(
+          repository: serviceLocator(),
+        ),
+      )
+      ..registerFactory<AuthRepository>(
         () => AuthRepositoryImpl(
           dataSource: serviceLocator(),
         ),
       )
-      ..registerLazySingleton<AuthDataSource>(
+      ..registerFactory<AuthDataSource>(
         () => AuthRemoteDataSource(
           client: serviceLocator(),
         ),
       )
-      ..registerLazySingleton<SupabaseClient>(
+      ..registerFactory<SupabaseClient>(
         () => client,
       );
   }
