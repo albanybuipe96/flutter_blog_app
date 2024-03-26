@@ -1,8 +1,13 @@
 part of 'package:flutter_blog_app/src/auth/ux/screens/signup/signup_screen.dart';
 
-class SignupForm extends StatelessWidget with FormValidator, NavGraph {
-  SignupForm({super.key});
+class SignupForm extends StatefulWidget {
+  const SignupForm({super.key});
 
+  @override
+  State<SignupForm> createState() => _SignupFormState();
+}
+
+class _SignupFormState extends State<SignupForm> with FormValidator, NavGraph {
   final state = Get.find<SignupScreenState>();
 
   @override
@@ -89,21 +94,42 @@ class SignupForm extends StatelessWidget with FormValidator, NavGraph {
         ],
       );
 
-  Widget get _signupButton => Obx(
-        () {
-          return CustomButton(
-            text: AuthResources.Strings.signup,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-            loaderColor: Colors.white,
-            onPressed: state.signup,
-            loading: state.loading(),
-            enabled: state.enabled(),
-            width: double.infinity,
-            height: 55,
-          );
-        },
-      );
+  Widget get _signupButton {
+    final uiState = Get.find<SignupScreenState>();
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthLoading) {
+          uiState.loading.value = true;
+          uiState.enabled.value = false;
+        }
+        if (state is AuthSuccess) {
+          uiState.loading.value = false;
+          uiState.enabled.value = true;
+        }
+      },
+      builder: (context, state) {
+        return Obx(
+          () {
+            return CustomButton(
+              text: AuthResources.Strings.signup,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+              loaderColor: Colors.white,
+              onPressed: () {
+                uiState.loading.value = true;
+                uiState.enabled.value = false;
+                uiState.signup(context);
+              },
+              loading: uiState.loading(),
+              enabled: uiState.enabled(),
+              width: double.infinity,
+              height: 55,
+            );
+          },
+        );
+      },
+    );
+  }
 }
