@@ -8,6 +8,7 @@ import 'package:flutter_blog_app/src/shared/di.dart';
 import 'package:get/get.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Di.init();
   runApp(const MyApp());
 }
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: Strings.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.dark,
-      home: SignupScreen(),
+      home: const SignupScreen(),
     );
   }
 }
