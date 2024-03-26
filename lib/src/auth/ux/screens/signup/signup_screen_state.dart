@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blog_app/core/ux/widgets/snackbars.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signup_usecase.dart';
+import 'package:flutter_blog_app/src/auth/ux/blocs/auth_bloc.dart';
 import 'package:get/get.dart';
 
 class SignupScreenState extends GetxController {
-  SignupScreenState({required SignupUseCase useCase}) : _useCase = useCase;
-
-  final SignupUseCase _useCase;
+  SignupScreenState();
 
   final emailController = TextEditingController();
   final usernameController = TextEditingController();
@@ -21,36 +21,16 @@ class SignupScreenState extends GetxController {
     isPassword.value = isPassword.toggle()();
   }
 
-  Future<void> signup() async {
+  Future<void> signup(BuildContext context) async {
     if (signupFormKey.currentState!.validate()) {
-      loading.value = true;
-      enabled.value = false;
-
-      final result = await _useCase(
-        SignupParams(
-          username: usernameController.text,
-          email: emailController.text,
-          password: passwordController.text,
-        ),
-      );
-
-      result.fold((failure) {
-        SnackBars.error(
-          message: failure.message,
-          execute: () {
-            loading.value = false;
-            enabled.value = true;
-          },
+      final bloc = context.read<AuthBloc>()
+        ..add(
+          AuthSignup(
+            username: usernameController.text.trim(),
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+          ),
         );
-      }, (id) {
-        SnackBars.success(
-          message: id,
-          execute: () {
-            loading.value = false;
-            enabled.value = true;
-          },
-        );
-      });
     }
   }
 
