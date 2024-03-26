@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/core/ux/widgets/snackbars.dart';
+import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signup_usecase.dart';
 import 'package:get/get.dart';
 
 class SignupScreenState extends GetxController {
+  SignupScreenState({required SignupUseCase useCase}) : _useCase = useCase;
+
+  final SignupUseCase _useCase;
+
   final emailController = TextEditingController();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -20,9 +26,30 @@ class SignupScreenState extends GetxController {
       loading.value = true;
       enabled.value = false;
 
-      await Future.delayed(const Duration(seconds: 2), () {
-        loading.value = false;
-        enabled.value = true;
+      final result = await _useCase(
+        SignupParams(
+          username: usernameController.text,
+          email: emailController.text,
+          password: passwordController.text,
+        ),
+      );
+
+      result.fold((failure) {
+        SnackBars.error(
+          message: failure.message,
+          execute: () {
+            loading.value = false;
+            enabled.value = true;
+          },
+        );
+      }, (id) {
+        SnackBars.success(
+          message: id,
+          execute: () {
+            loading.value = false;
+            enabled.value = true;
+          },
+        );
       });
     }
   }
