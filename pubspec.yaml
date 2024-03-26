@@ -7,25 +7,25 @@ environment:
   sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
+  cupertino_icons: ^1.0.6
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.6
+  eva_icons_flutter: ^3.1.0
+  gap: ^3.0.1
   get: ^4.6.6
   get_it: ^7.6.7
-  gap: ^3.0.1
-  eva_icons_flutter: ^3.1.0
   fpdart: ^1.1.0
   supabase_flutter: ^2.3.4
   envied: ^0.5.3
   flutter_bloc: ^8.1.5
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^3.0.0
-  very_good_analysis: ^5.1.0
   build_runner: ^2.4.8
   envied_generator: ^0.5.3
+  flutter_lints: ^3.0.0
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^5.1.0
 
 flutter:
   uses-material-design: true
