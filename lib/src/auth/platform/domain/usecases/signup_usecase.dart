@@ -1,15 +1,16 @@
 import 'package:flutter_blog_app/core/errors/failures/failure.dart';
 import 'package:flutter_blog_app/core/platform/domain/usecases/parametarized_usecase.dart';
+import 'package:flutter_blog_app/src/auth/platform/domain/entities/user.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/repositories/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class SignupUseCase implements ParametarizedUsecase<String, SignupParams> {
+class SignupUseCase implements ParametarizedUsecase<User, SignupParams> {
   const SignupUseCase({required AuthRepository repository})
       : _repository = repository;
   final AuthRepository _repository;
 
   @override
-  Future<Either<Failure, String>> call(SignupParams params) async {
+  Future<Either<Failure, User>> call(SignupParams params) async {
     return _repository.signup(
       username: params.username,
       email: params.email,

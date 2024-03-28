@@ -1,15 +1,16 @@
 import 'package:flutter_blog_app/core/errors/failures/failure.dart';
 import 'package:flutter_blog_app/core/platform/domain/usecases/parametarized_usecase.dart';
+import 'package:flutter_blog_app/src/auth/platform/domain/entities/user.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/repositories/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class SigninUse implements ParametarizedUsecase<String, SigninParams> {
-  const SigninUse({required AuthRepository repository})
+class SigninUsecase implements ParametarizedUsecase<User, SigninParams> {
+  const SigninUsecase({required AuthRepository repository})
       : _repository = repository;
   final AuthRepository _repository;
 
   @override
-  Future<Either<Failure, String>> call(SigninParams params) {
+  Future<Either<Failure, User>> call(SigninParams params) {
     return _repository.signin(
       email: params.email,
       password: params.password,
