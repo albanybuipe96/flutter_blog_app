@@ -16,3 +16,13 @@ final class AuthSignup extends AuthEvent {
   final String email;
   final String password;
 }
+
+final class AuthSignin extends AuthEvent {
+  const AuthSignin({
+    required this.email,
+    required this.password,
+  });
+
+  final String email;
+  final String password;
+}
