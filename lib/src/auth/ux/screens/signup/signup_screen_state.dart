@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blog_app/core/ux/widgets/snackbars.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signup_usecase.dart';
-import 'package:flutter_blog_app/src/auth/ux/blocs/auth_bloc.dart';
 import 'package:flutter_blog_app/src/shared/nav_graph.dart';
 import 'package:get/get.dart';
 
 class SignupScreenState extends GetxController with NavGraph {
-  SignupScreenState();
+  SignupScreenState({required SignupUsecase signupUsecase})
+      : _signupUsecase = signupUsecase;
+
+  final SignupUsecase _signupUsecase;
 
   final emailController = TextEditingController();
   final usernameController = TextEditingController();
@@ -22,42 +23,40 @@ class SignupScreenState extends GetxController with NavGraph {
     isPassword.value = isPassword.toggle()();
   }
 
-  Future<void> signup(BuildContext context) async {
+  Future<void> signup() async {
+    loading.value = true;
+    enabled.value = false;
     if (signupFormKey.currentState!.validate()) {
-      context.read<AuthBloc>().add(
-            AuthSignup(
-              username: usernameController.text.trim(),
-              email: emailController.text.trim(),
-              password: passwordController.text.trim(),
-            ),
-          );
-    }
-  }
-
-  void signupListener(BuildContext context, AuthState state) {
-    if (state is AuthLoading) {
-      loading.value = true;
-      enabled.value = false;
-    }
-    if (state is AuthSuccess) {
-      SnackBars.success(
-        message: 'User signed up successfully.',
-        execute: () {
-          loading.value = false;
-          enabled.value = true;
-
-          goToHomeScreen();
-        },
+      final response = await _signupUsecase(
+        SignupParams(
+          username: usernameController.text.trim(),
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        ),
       );
-    }
-    if (state is AuthFailure) {
-      SnackBars.error(
-        message: state.message,
-        execute: () {
-          loading.value = false;
-          enabled.value = true;
-        },
-      );
+
+      response.fold((failure) {
+        SnackBars.error(
+          message: failure.message,
+          execute: () {
+            loading.value = false;
+            enabled.value = true;
+          },
+        );
+      }, (user) {
+        SnackBars.success(
+          message: 'User, ${user.email} signed up successfully.',
+          execute: () {
+            loading.value = false;
+            enabled.value = true;
+
+            goToHomeScreen();
+          },
+        );
+      });
+    } else {
+      loading.value = false;
+      enabled.value = true;
     }
   }
 

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blog_app/core/ux/widgets/snackbars.dart';
-import 'package:flutter_blog_app/src/auth/ux/blocs/auth_bloc.dart';
+import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signin_usecase.dart';
 import 'package:flutter_blog_app/src/shared/nav_graph.dart';
 import 'package:get/get.dart';
 
 class SigninScreenState extends GetxController with NavGraph {
+  SigninScreenState({required SigninUsecase signinUsecase})
+      : _signinUsecase = signinUsecase;
+  final SigninUsecase _signinUsecase;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   GlobalKey<FormState> signinFormKey = GlobalKey<FormState>();
@@ -18,43 +20,42 @@ class SigninScreenState extends GetxController with NavGraph {
     isPassword.value = isPassword.toggle()();
   }
 
-  Future<void> signin(BuildContext context) async {
+  Future<void> signin() async {
+    loading.value = true;
+    enabled.value = false;
     if (signinFormKey.currentState!.validate()) {
-      context.read<AuthBloc>().add(
-            AuthSignin(
-              email: emailController.text.trim(),
-              password: passwordController.text.trim(),
-            ),
+      final response = await _signinUsecase(
+        SigninParams(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        ),
+      );
+
+      response.fold(
+        (failure) {
+          SnackBars.error(
+            message: failure.message,
+            execute: () {
+              loading.value = false;
+              enabled.value = true;
+            },
           );
+        },
+        (user) {
+          SnackBars.success(
+            message: 'User, ${user.email}, signed in successfully.',
+            execute: () {
+              loading.value = false;
+              enabled.value = true;
 
-      // emailController.clear();
-      // passwordController.clear();
-    }
-  }
-
-  void signinListener(BuildContext context, AuthState state) {
-    if (state is AuthLoading) {
-      loading.value = true;
-      enabled.value = false;
-    }
-    if (state is AuthSuccess) {
-      SnackBars.success(
-        message: 'User, ${state.user.email}, signed in successfully.',
-        execute: () {
-          loading.value = false;
-          enabled.value = true;
-          goToHomeScreen();
+              goToHomeScreen();
+            },
+          );
         },
       );
-    }
-    if (state is AuthFailure) {
-      SnackBars.error(
-        message: state.message,
-        execute: () {
-          loading.value = false;
-          enabled.value = true;
-        },
-      );
+    } else {
+      loading.value = false;
+      enabled.value = true;
     }
   }
 
