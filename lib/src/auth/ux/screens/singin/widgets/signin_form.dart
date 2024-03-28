@@ -83,30 +83,21 @@ class _SigninFormState extends State<SigninForm> with FormValidator, NavGraph {
       );
 
   Widget get _signinButton {
-    final uiState = Get.find<SigninScreenState>();
-    return BlocConsumer<AuthBloc, AuthState>(
-      listener: uiState.signinListener,
-      builder: (context, state) {
-        return Obx(
+    final state = Get.find<SigninScreenState>();
+    return Obx(
           () {
-            return CustomButton(
-              text: AuthResources.Strings.signin,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-              loaderColor: Colors.white,
-              onPressed: () {
-                uiState.loading.value = true;
-                uiState.enabled.value = false;
-                uiState.signin(context);
-              },
-              loading: uiState.loading(),
-              enabled: uiState.enabled(),
-              width: double.infinity,
-              height: 55,
-            );
-          },
+        return CustomButton(
+          text: AuthResources.Strings.signin,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+          loaderColor: Colors.white,
+          onPressed: state.signin,
+          loading: state.loading(),
+          enabled: state.enabled(),
+          width: double.infinity,
+          height: 55,
         );
       },
     );

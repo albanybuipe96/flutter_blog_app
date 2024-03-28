@@ -95,30 +95,21 @@ class _SignupFormState extends State<SignupForm> with FormValidator, NavGraph {
       );
 
   Widget get _signupButton {
-    final uiState = Get.find<SignupScreenState>();
-    return BlocConsumer<AuthBloc, AuthState>(
-      listener: uiState.signupListener,
-      builder: (context, state) {
-        return Obx(
+    final state = Get.find<SignupScreenState>();
+    return Obx(
           () {
-            return CustomButton(
-              text: AuthResources.Strings.signup,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-              loaderColor: Colors.white,
-              onPressed: () {
-                uiState.loading.value = true;
-                uiState.enabled.value = false;
-                uiState.signup(context);
-              },
-              loading: uiState.loading(),
-              enabled: uiState.enabled(),
-              width: double.infinity,
-              height: 55,
-            );
-          },
+        return CustomButton(
+          text: AuthResources.Strings.signup,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+          loaderColor: Colors.white,
+          onPressed: state.signup,
+          loading: state.loading(),
+          enabled: state.enabled(),
+          width: double.infinity,
+          height: 55,
         );
       },
     );
