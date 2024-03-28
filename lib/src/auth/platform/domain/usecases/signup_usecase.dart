@@ -4,8 +4,8 @@ import 'package:flutter_blog_app/src/auth/platform/domain/entities/user.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/repositories/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class SignupUseCase implements ParametarizedUsecase<User, SignupParams> {
-  const SignupUseCase({required AuthRepository repository})
+class SignupUsecase implements ParametarizedUsecase<User, SignupParams> {
+  const SignupUsecase({required AuthRepository repository})
       : _repository = repository;
   final AuthRepository _repository;
 
