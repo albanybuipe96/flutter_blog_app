@@ -1,13 +1,8 @@
 part of 'package:flutter_blog_app/src/auth/ux/screens/signup/signup_screen.dart';
 
-class SignupForm extends StatefulWidget {
-  const SignupForm({super.key});
+class SignupForm extends StatelessWidget with FormValidator {
+  SignupForm({super.key});
 
-  @override
-  State<SignupForm> createState() => _SignupFormState();
-}
-
-class _SignupFormState extends State<SignupForm> with FormValidator, NavGraph {
   final state = Get.find<SignupScreenState>();
 
   @override
@@ -89,7 +84,7 @@ class _SignupFormState extends State<SignupForm> with FormValidator, NavGraph {
           CustomButton.text(
             text: AuthResources.Strings.signin,
             style: const TextStyle(color: Colors.blue),
-            onPressed: offToSigninScreen,
+            onPressed: state.gotoSigninScreen,
           ),
         ],
       );

@@ -29,5 +29,5 @@ class SigninScreen extends StatelessWidget {
     );
   }
 
-  Widget get _form => const SigninForm();
+  Widget get _form => SigninForm();
 }

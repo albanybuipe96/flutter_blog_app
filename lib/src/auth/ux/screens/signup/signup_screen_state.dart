@@ -60,6 +60,12 @@ class SignupScreenState extends GetxController with NavGraph {
     }
   }
 
+  void gotoSigninScreen() {
+    offToSigninScreen();
+    emailController.clear();
+    passwordController.clear();
+  }
+
   @override
   void onInit() {
     usernameController.addListener(() {});

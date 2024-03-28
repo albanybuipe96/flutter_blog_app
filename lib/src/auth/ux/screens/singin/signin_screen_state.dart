@@ -48,7 +48,7 @@ class SigninScreenState extends GetxController with NavGraph {
               loading.value = false;
               enabled.value = true;
 
-              goToHomeScreen();
+              offToHomeScreen();
             },
           );
         },
@@ -57,6 +57,12 @@ class SigninScreenState extends GetxController with NavGraph {
       loading.value = false;
       enabled.value = true;
     }
+  }
+
+  void gotoSignupScreen() {
+    offToSignupScreen();
+    emailController.clear();
+    passwordController.clear();
   }
 
   @override
