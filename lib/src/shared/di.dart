@@ -5,6 +5,7 @@ import 'package:flutter_blog_app/src/auth/platform/data/repositories/auth_reposi
 import 'package:flutter_blog_app/src/auth/platform/data/sources/auth_data_source.dart';
 import 'package:flutter_blog_app/src/auth/platform/data/sources/remote/auth_remote_data_source.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/repositories/auth_repository.dart';
+import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signin_usecase.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signup_usecase.dart';
 import 'package:flutter_blog_app/src/auth/ux/blocs/auth_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -32,10 +33,16 @@ class Di {
       ..registerLazySingleton(
         () => AuthBloc(
           signupUseCase: serviceLocator(),
+          signinUseCase: serviceLocator(),
         ),
       )
       ..registerFactory(
         () => SignupUseCase(
+          repository: serviceLocator(),
+        ),
+      )
+      ..registerFactory(
+        () => SigninUsecase(
           repository: serviceLocator(),
         ),
       )
