@@ -7,7 +7,9 @@ import 'package:flutter_blog_app/src/auth/platform/data/sources/remote/auth_remo
 import 'package:flutter_blog_app/src/auth/platform/domain/repositories/auth_repository.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signin_usecase.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signup_usecase.dart';
-import 'package:flutter_blog_app/src/auth/ux/blocs/auth_bloc.dart';
+import 'package:flutter_blog_app/src/auth/ux/screens/signup/signup_screen_state.dart';
+import 'package:flutter_blog_app/src/auth/ux/screens/singin/signin_screen_state.dart';
+import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -20,7 +22,7 @@ class Di {
     await _injector();
   }
 
-  static Future<Supabase> initSupabase() async {
+  static Future<Supabase> _initSupabase() async {
     return Supabase.initialize(
       url: Secrets.SUPABASE_URL,
       anonKey: Secrets.SUPABASE_ANON_KEY,
@@ -28,36 +30,37 @@ class Di {
   }
 
   static Future<void> _injector() async {
-    final client = (await Di.initSupabase()).client;
+    await _injectDataSources();
+    _injectRepositories();
+    _injectUsecases();
+  }
+
+  static void injectSignupScreenState() {
+    Get.lazyPut(() => SignupScreenState(signupUsecase: serviceLocator()));
+  }
+
+  static void injectSigninScreenState() {
+    Get.lazyPut(() => SigninScreenState(signinUsecase: serviceLocator()));
+  }
+
+  static void _injectUsecases() {
     serviceLocator
-      ..registerLazySingleton(
-        () => AuthBloc(
-          signupUseCase: serviceLocator(),
-          signinUseCase: serviceLocator(),
-        ),
-      )
-      ..registerFactory(
-        () => SignupUseCase(
-          repository: serviceLocator(),
-        ),
-      )
-      ..registerFactory(
-        () => SigninUsecase(
-          repository: serviceLocator(),
-        ),
-      )
-      ..registerFactory<AuthRepository>(
-        () => AuthRepositoryImpl(
-          dataSource: serviceLocator(),
-        ),
-      )
+      ..registerFactory(() => SignupUsecase(repository: serviceLocator()))
+      ..registerFactory(() => SigninUsecase(repository: serviceLocator()));
+  }
+
+  static void _injectRepositories() {
+    serviceLocator.registerFactory<AuthRepository>(
+      () => AuthRepositoryImpl(dataSource: serviceLocator()),
+    );
+  }
+
+  static Future<void> _injectDataSources() async {
+    final client = (await Di._initSupabase()).client;
+    serviceLocator
       ..registerFactory<AuthDataSource>(
-        () => AuthRemoteDataSource(
-          client: serviceLocator(),
-        ),
+        () => AuthRemoteDataSource(client: serviceLocator()),
       )
-      ..registerFactory<SupabaseClient>(
-        () => client,
-      );
+      ..registerFactory<SupabaseClient>(() => client);
   }
 }
