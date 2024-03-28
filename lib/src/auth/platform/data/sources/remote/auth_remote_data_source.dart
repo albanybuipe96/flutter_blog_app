@@ -1,5 +1,9 @@
-import 'package:flutter_blog_app/core/errors/exceptions/exception.dart';
+import 'dart:developer';
+
+import 'package:flutter_blog_app/core/errors/exceptions/server_exception.dart';
 import 'package:flutter_blog_app/core/resources/resources.dart';
+import 'package:flutter_blog_app/src/auth/platform/data/models/user_model.dart';
+import 'package:flutter_blog_app/src/auth/platform/data/models/user_model.dart';
 import 'package:flutter_blog_app/src/auth/platform/data/sources/auth_data_source.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -10,7 +14,7 @@ class AuthRemoteDataSource implements AuthDataSource {
   final SupabaseClient _client;
 
   @override
-  Future<String> signin({
+  Future<UserModel> signin({
     required String email,
     required String password,
   }) async {
@@ -24,14 +28,16 @@ class AuthRemoteDataSource implements AuthDataSource {
         throw const ServerException(message: Strings.defaultErrorMessage);
       }
 
-      return response.user!.id;
+      return UserModel.fromJson(response.user!.toJson());
+    } on AuthException catch (err) {
+      throw ServerException(message: err.message);
     } catch (err) {
       throw ServerException(message: '$err');
     }
   }
 
   @override
-  Future<String> signup({
+  Future<UserModel> signup({
     required String username,
     required String email,
     required String password,
@@ -40,7 +46,10 @@ class AuthRemoteDataSource implements AuthDataSource {
       final response = await _client.auth.signUp(
         password: password,
         email: email,
-        data: {'username': username},
+        data: {
+          'username': username,
+          'email': email,
+        },
       );
 
       final user = response.user;
@@ -48,9 +57,16 @@ class AuthRemoteDataSource implements AuthDataSource {
         throw const ServerException(message: Strings.defaultErrorMessage);
       }
 
-      return response.user!.id;
+      log('${user}', name: '$runtimeType');
+
+      return UserModel.fromJson(user.toJson());
+    } on AuthException catch (err) {
+      throw ServerException(
+        message: err.message,
+        statusCode: err.statusCode,
+      );
     } catch (err) {
-      throw ServerException(message: '$err');
+      rethrow;
     }
   }
 }
