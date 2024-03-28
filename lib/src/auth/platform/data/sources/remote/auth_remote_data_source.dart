@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter_blog_app/core/errors/exceptions/server_exception.dart';
 import 'package:flutter_blog_app/core/resources/resources.dart';
 import 'package:flutter_blog_app/src/auth/platform/data/models/user_model.dart';
-import 'package:flutter_blog_app/src/auth/platform/data/models/user_model.dart';
 import 'package:flutter_blog_app/src/auth/platform/data/sources/auth_data_source.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
