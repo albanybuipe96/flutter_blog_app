@@ -12,9 +12,9 @@ final class AuthLoading extends AuthState {}
 final class AuthSuccess extends AuthState {
 
   const AuthSuccess({
-    required this.uid,
+    required this.user,
   });
-  final String uid;
+  final User user;
 }
 
 final class AuthFailure extends AuthState {
