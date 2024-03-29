@@ -1,7 +1,7 @@
 import 'package:flutter_blog_app/core/errors/failures/failure.dart';
+import 'package:flutter_blog_app/core/platform/domain/repositories/auth_repository.dart';
 import 'package:flutter_blog_app/core/platform/domain/usecases/parametarized_usecase.dart';
-import 'package:flutter_blog_app/src/auth/platform/domain/entities/user.dart';
-import 'package:flutter_blog_app/src/auth/platform/domain/repositories/auth_repository.dart';
+import 'package:flutter_blog_app/core/platform/entities/user.dart';
 import 'package:fpdart/fpdart.dart';
 
 class SignupUsecase implements ParametarizedUsecase<User, SignupParams> {
