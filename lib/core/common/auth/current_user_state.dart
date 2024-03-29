@@ -4,10 +4,10 @@ import 'package:flutter_blog_app/core/platform/entities/user.dart';
 import 'package:get/get.dart';
 
 class CurrentUserState extends GetxController {
-  CurrentUserState(
-      {required CurrentUserUsecase currentUserUsecase,
-      required SignoutUsecase signoutUsecase})
-      : _currentUserUsecase = currentUserUsecase,
+  CurrentUserState({
+    required CurrentUserUsecase currentUserUsecase,
+    required SignoutUsecase signoutUsecase,
+  })  : _currentUserUsecase = currentUserUsecase,
         _signoutUsecase = signoutUsecase;
 
   final CurrentUserUsecase _currentUserUsecase;

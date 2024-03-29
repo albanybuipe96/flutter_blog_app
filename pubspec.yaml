@@ -8,9 +8,9 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.6
+  eva_icons_flutter: ^3.1.0
   flutter:
     sdk: flutter
-  eva_icons_flutter: ^3.1.0
   gap: ^3.0.1
   get: ^4.6.6
   get_it: ^7.6.7

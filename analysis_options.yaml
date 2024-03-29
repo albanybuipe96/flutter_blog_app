@@ -6,3 +6,5 @@ linter:
     constant_identifier_names: false
     non_constant_identifier_names: false
     avoid_field_initializers_in_const_classes: false
+    no_runtimeType_toString: false
+    one_member_abstracts: false

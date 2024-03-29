@@ -78,7 +78,7 @@ class AuthRemoteDataSource implements AuthDataSource {
         throw const ServerException(message: Strings.defaultErrorMessage);
       }
 
-      log('${user}', name: '$runtimeType');
+      log('$user', name: '$runtimeType');
 
       return UserModel.fromJson(user.toJson());
     } on AuthException catch (err) {
