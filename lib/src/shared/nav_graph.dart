@@ -1,6 +1,5 @@
+import 'package:flutter_blog_app/src/auth/ux/screens/signin/signin_screen.dart';
 import 'package:flutter_blog_app/src/auth/ux/screens/signup/signup_screen.dart';
-import 'package:flutter_blog_app/src/auth/ux/screens/singin/signin_screen.dart';
-import 'package:flutter_blog_app/src/blog/ux/screens/home/home_screen.dart';
 import 'package:flutter_blog_app/src/blog/ux/screens/home/home_screen.dart';
 import 'package:get/get.dart';
 
