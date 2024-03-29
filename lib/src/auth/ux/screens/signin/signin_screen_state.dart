@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/core/ux/widgets/snackbars.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signin_usecase.dart';
@@ -49,12 +48,12 @@ class SigninScreenState extends GetxController with NavGraph {
               loading.value = false;
               enabled.value = true;
 
+              clearInputControllers();
               offToHomeScreen();
             },
           );
         },
       );
-
     } else {
       loading.value = false;
       enabled.value = true;
@@ -62,7 +61,11 @@ class SigninScreenState extends GetxController with NavGraph {
   }
 
   void gotoSignupScreen() {
+    clearInputControllers();
     offToSignupScreen();
+  }
+
+  void clearInputControllers() {
     emailController.clear();
     passwordController.clear();
   }
