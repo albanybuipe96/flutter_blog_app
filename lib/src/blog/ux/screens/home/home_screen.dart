@@ -12,7 +12,6 @@ class HomeScreen extends StatelessWidget with NavGraph {
   HomeScreen({super.key});
 
   final _ = Di.injectHomeScreenState();
-  final __ = Di.injectAddBlogScreenState();
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +32,6 @@ class HomeScreen extends StatelessWidget with NavGraph {
       IconButton(
         onPressed: goToAddBlogScreen,
         icon: const Icon(EvaIcons.plusCircleOutline),
-      ),
-      IconButton(
-        onPressed: () => homeScreenState.readBlog(jsonString),
-        icon: const Icon(EvaIcons.plusSquareOutline),
       ),
       IconButton(
         onPressed: () => currentUserState.signout(
