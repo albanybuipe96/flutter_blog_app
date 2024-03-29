@@ -46,6 +46,7 @@ class SignupForm extends StatelessWidget with FormValidator {
         leading: const Icon(EvaIcons.personOutline),
         style: const TextStyle(color: Colors.white),
         bordered: true,
+        borderColor: Palette.borderColor,
       );
 
   Widget get _emailField => InputField(
@@ -57,6 +58,7 @@ class SignupForm extends StatelessWidget with FormValidator {
         leading: const Icon(EvaIcons.emailOutline),
         style: const TextStyle(color: Colors.white),
         bordered: true,
+        borderColor: Palette.borderColor,
       );
 
   Widget get _passwordField => Obx(
@@ -75,6 +77,7 @@ class SignupForm extends StatelessWidget with FormValidator {
           style: const TextStyle(color: Colors.white),
           fillColor: Colors.transparent,
           bordered: true,
+          borderColor: Palette.borderColor,
         ),
       );
 
@@ -83,30 +86,11 @@ class SignupForm extends StatelessWidget with FormValidator {
           Text(AuthResources.Strings.haveAccount),
           CustomButton.text(
             text: AuthResources.Strings.signin,
-            style: const TextStyle(color: Colors.blue),
+            style: AuthResources.Styles.authPanelButtonStyle,
             onPressed: state.gotoSigninScreen,
           ),
         ],
       );
 
-  Widget get _signupButton {
-    final state = Get.find<SignupScreenState>();
-    return Obx(
-          () {
-        return CustomButton(
-          text: AuthResources.Strings.signup,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-          loaderColor: Colors.white,
-          onPressed: state.signup,
-          loading: state.loading(),
-          enabled: state.enabled(),
-          width: double.infinity,
-          height: 55,
-        );
-      },
-    );
-  }
+  Widget get _signupButton => const SignupButton();
 }

@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/core/resources/dimens.dart';
+import 'package:flutter_blog_app/core/resources/palette.dart';
 import 'package:flutter_blog_app/core/ux/widgets/custom_button.dart';
 import 'package:flutter_blog_app/core/ux/widgets/input_field.dart';
 import 'package:flutter_blog_app/src/auth/resources/auth_resources.dart';
@@ -12,6 +13,8 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 part 'package:flutter_blog_app/src/auth/ux/screens/signup/widgets/signup_form.dart';
+
+part 'package:flutter_blog_app/src/auth/ux/screens/signup/widgets/signup_button.dart';
 
 class SignupScreen extends StatelessWidget {
   SignupScreen({super.key});
