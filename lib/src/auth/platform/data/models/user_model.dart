@@ -1,4 +1,4 @@
-import 'package:flutter_blog_app/src/auth/platform/domain/entities/user.dart';
+import 'package:flutter_blog_app/core/platform/entities/user.dart';
 
 class UserModel extends User {
   UserModel({
@@ -14,6 +14,12 @@ class UserModel extends User {
       username: json?['username'] as String?,
     );
   }
+
+  factory UserModel.empty() => UserModel(
+        id: 'id',
+        email: 'email',
+        username: 'username',
+      );
 
   Map<String, dynamic> toJson() {
     return {
