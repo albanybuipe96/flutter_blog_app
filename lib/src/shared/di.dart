@@ -12,6 +12,8 @@ import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signin_usecas
 import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signup_usecase.dart';
 import 'package:flutter_blog_app/src/auth/ux/screens/signin/signin_screen_state.dart';
 import 'package:flutter_blog_app/src/auth/ux/screens/signup/signup_screen_state.dart';
+import 'package:flutter_blog_app/src/blog/ux/screens/add/add_blog_screen_state.dart';
+import 'package:flutter_blog_app/src/blog/ux/screens/home/home_screen_state.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -53,6 +55,14 @@ class Di {
         signoutUsecase: serviceLocator(),
       ),
     );
+  }
+
+  static void injectAddBlogScreenState() {
+    Get.lazyPut(AddBlogScreenState.new);
+  }
+
+  static void injectHomeScreenState() {
+    Get.lazyPut(HomeScreenState.new);
   }
 
   static void _injectUsecases() {
