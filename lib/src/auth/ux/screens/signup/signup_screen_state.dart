@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blog_app/core/common/auth/current_user_state.dart';
 import 'package:flutter_blog_app/core/ux/widgets/snackbars.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signup_usecase.dart';
 import 'package:flutter_blog_app/src/shared/di.dart';
