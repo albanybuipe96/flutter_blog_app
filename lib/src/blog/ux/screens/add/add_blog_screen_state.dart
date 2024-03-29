@@ -1,18 +1,37 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_blog_app/src/blog/ux/screens/add/add_blog_screen.dart';
-import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_blog_app/core/utils/device_image_picker.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
-class AddBlogScreenState extends GetxController {
+class AddBlogScreenState extends GetxController with DeviceImagePicker {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
+  final imageUrl = Rx<String?>(null);
+
+  final categories = [
+    'Business',
+    'Technology',
+    'Programming',
+    'Science',
+    'Politics',
+    'Education',
+  ];
+
+  final categoryIndex = 0.obs;
+
+  void onCategoryChanged(int index) {
+    categoryIndex.value = index;
+  }
 
   final loading = false.obs;
   final enabled = true.obs;
   final readOnly = true.obs;
+
+  Future<void> pickImage() async {
+    imageUrl.value = await pickImageFromGallery();
+  }
 
   void post() {
     loading.value = true;
@@ -20,10 +39,6 @@ class AddBlogScreenState extends GetxController {
     Future.delayed(const Duration(milliseconds: 1000), () {
       loading.value = false;
       enabled.value = true;
-
-      final text =
-          jsonEncode(QuillConfig.quillController.document.toDelta().toJson());
-      log('$text', name: '$runtimeType');
     });
   }
 
@@ -34,17 +49,12 @@ class AddBlogScreenState extends GetxController {
 
   @override
   void onInit() {
-    readDocument();
-    titleController.addListener(() {});
+    titleController.addListener(() {
+      log(titleController.text, name: '$runtimeType');
+      log(contentController.text, name: '$runtimeType');
+    });
     contentController.addListener(() {});
     super.onInit();
-  }
-
-  void readDocument() {
-    final json = jsonDecode(jsonString);
-    QuillConfig.quillController.document = Document.fromJson(
-      json as List<dynamic>,
-    );
   }
 
   @override
