@@ -129,6 +129,10 @@ class CustomButton extends StatelessWidget {
       disabledColor: Colors.grey.shade400,
       minWidth: width,
       height: height,
+      disabledElevation: 0,
+      hoverElevation: 0,
+      highlightElevation: 0,
+      focusElevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
         side: BorderSide(color: borderColor ?? Colors.black),
@@ -146,10 +150,7 @@ class CustomButton extends StatelessWidget {
                   strokeWidth: 5,
                 ),
               )
-            : Text(
-                text,
-                style: style,
-              ),
+            : Text(text, style: style),
       ),
     );
   }
