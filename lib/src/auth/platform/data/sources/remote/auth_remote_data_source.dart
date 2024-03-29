@@ -13,6 +13,28 @@ class AuthRemoteDataSource implements AuthDataSource {
   final SupabaseClient _client;
 
   @override
+  Session? get userSession => _client.auth.currentSession;
+
+  @override
+  Future<void> signout() async {
+    await _client.auth.signOut();
+  }
+
+  @override
+  Future<UserModel?> get getCurrentUser async {
+    try {
+      if (userSession != null) {
+        final profiles =
+            await _client.from(_table).select().eq('id', userSession!.user.id);
+        return UserModel.fromJson(profiles.first);
+      }
+      return null;
+    } catch (err) {
+      throw ServerException(message: '$err');
+    }
+  }
+
+  @override
   Future<UserModel> signin({
     required String email,
     required String password,
@@ -68,4 +90,6 @@ class AuthRemoteDataSource implements AuthDataSource {
       rethrow;
     }
   }
+
+  static const _table = 'profiles';
 }

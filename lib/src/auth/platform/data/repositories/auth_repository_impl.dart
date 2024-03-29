@@ -1,8 +1,8 @@
 import 'package:flutter_blog_app/core/errors/exceptions/server_exception.dart';
 import 'package:flutter_blog_app/core/errors/failures/failure.dart';
+import 'package:flutter_blog_app/core/platform/domain/repositories/auth_repository.dart';
+import 'package:flutter_blog_app/core/platform/entities/user.dart';
 import 'package:flutter_blog_app/src/auth/platform/data/sources/auth_data_source.dart';
-import 'package:flutter_blog_app/src/auth/platform/domain/entities/user.dart';
-import 'package:flutter_blog_app/src/auth/platform/domain/repositories/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class AuthRepositoryImpl with _GetUser implements AuthRepository {
@@ -10,6 +10,22 @@ class AuthRepositoryImpl with _GetUser implements AuthRepository {
       : _dataSource = dataSource;
 
   final AuthDataSource _dataSource;
+
+  @override
+  Future<Either<Failure, User>> get currentUser async {
+    try {
+      final user = await _dataSource.getCurrentUser;
+      if (user == null) {
+        return const Left(
+          Failure(message: 'User not logged in.'),
+        );
+      }
+
+      return Right(user);
+    } on ServerException catch (err) {
+      return Left(Failure(message: err.message));
+    }
+  }
 
   @override
   Future<Either<Failure, User>> signin({
@@ -37,6 +53,16 @@ class AuthRepositoryImpl with _GetUser implements AuthRepository {
         username: username,
       ),
     );
+  }
+
+  @override
+  Future<Either<Failure, void>> signout() async {
+    try {
+      final response = await _dataSource.signout();
+      return right(response);
+    } on ServerException catch (err) {
+      return left(Failure(message: err.message));
+    }
   }
 }
 
