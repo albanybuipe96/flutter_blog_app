@@ -1,0 +1,42 @@
+[
+  {
+    "insert": "Albany Buipe",
+    "attributes": {
+      "bold": true
+    }
+  },
+  {
+    "insert": "\n",
+    "attributes": {
+      "align": "center"
+    }
+  },
+  {
+    "insert": "Hello, my name is "
+  },
+  {
+    "insert": "Albany Buipe",
+    "attributes": {
+      "bold": true,
+      "font": "nunito"
+    }
+  },
+  {
+    "insert": ".\n\nI am a Platform Engineer with Hubtel Ltd.\n\nI program in Dart and "
+  },
+  {
+    "insert": "Flutter",
+    "attributes": {
+      "color": "#FF1E88E5"
+    }
+  },
+  {
+    "insert": ".\n\nBut professionally I program Native Android in Kotlin because I mostly work on POS Terminal devices and payment processing."
+  },
+  {
+    "insert": "\n",
+    "attributes": {
+      "code-block": true
+    }
+  }
+]

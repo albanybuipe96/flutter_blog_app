@@ -25,7 +25,7 @@ class App extends StatelessWidget {
     final appState = Get.find<AppState>();
     return Obx(
       () {
-        return appState.isUserLoggedIn() ? const HomeScreen() : SigninScreen();
+        return appState.isUserLoggedIn() ? HomeScreen() : SigninScreen();
       },
     );
   }

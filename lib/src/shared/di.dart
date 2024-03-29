@@ -14,6 +14,7 @@ import 'package:flutter_blog_app/src/auth/ux/screens/signin/signin_screen_state.
 import 'package:flutter_blog_app/src/auth/ux/screens/signup/signup_screen_state.dart';
 import 'package:flutter_blog_app/src/blog/ux/screens/add/add_blog_screen_state.dart';
 import 'package:flutter_blog_app/src/blog/ux/screens/home/home_screen_state.dart';
+import 'package:flutter_blog_app/src/blog/ux/screens/read/read_blog_screen_state.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -59,6 +60,10 @@ class Di {
 
   static void injectAddBlogScreenState() {
     Get.lazyPut(AddBlogScreenState.new);
+  }
+
+  static void injectReadBlocScreenState() {
+    Get.lazyPut(ReadBlogScreenState.new);
   }
 
   static void injectHomeScreenState() {

@@ -8,6 +8,7 @@ class InputField extends StatelessWidget {
     this.onChanged,
     this.onFocused,
     this.label = 'Label',
+    this.maxLines = 1,
     this.validator,
     this.obscure = false,
     this.style,
@@ -29,6 +30,7 @@ class InputField extends StatelessWidget {
   final void Function()? onFocused;
   final String? label;
   final bool obscure;
+  final int maxLines;
   final TextInputType? keyboardType;
   final Widget? leading;
   final Widget? trailing;
@@ -61,6 +63,7 @@ class InputField extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
             ),
             child: TextFormField(
+              maxLines: maxLines,
               controller: controller,
               onChanged: onChanged,
               focusNode: FocusNode()..addListener(onFocused ?? () {}),
@@ -116,6 +119,7 @@ class InputField extends StatelessWidget {
           child: TextFormField(
             onChanged: onChanged,
             controller: controller,
+            maxLines: maxLines,
             focusNode: FocusNode()..addListener(onFocused ?? () {}),
             validator: validator,
             obscureText: obscure,

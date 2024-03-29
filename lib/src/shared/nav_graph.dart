@@ -2,6 +2,7 @@ import 'package:flutter_blog_app/src/auth/ux/screens/signin/signin_screen.dart';
 import 'package:flutter_blog_app/src/auth/ux/screens/signup/signup_screen.dart';
 import 'package:flutter_blog_app/src/blog/ux/screens/add/add_blog_screen.dart';
 import 'package:flutter_blog_app/src/blog/ux/screens/home/home_screen.dart';
+import 'package:flutter_blog_app/src/blog/ux/screens/read/read_blog_screen.dart';
 import 'package:get/get.dart';
 
 mixin class NavGraph {
@@ -35,5 +36,13 @@ mixin class NavGraph {
 
   void offToAddBlogScreen() {
     Get.off<void>(AddBlogScreen.new);
+  }
+
+  void goToReadBlogScreen() {
+    Get.to<void>(ReadBlogScreen.new);
+  }
+
+  void offToReadBlogScreen() {
+    Get.off<void>(ReadBlogScreen.new);
   }
 }
