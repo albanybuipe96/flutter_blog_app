@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/core/resources/dimens.dart';
 import 'package:flutter_blog_app/core/resources/palette.dart';
-
-import 'dimens.dart';
 
 class AppTheme {
   static const _borderRadius = Dimens.nano;

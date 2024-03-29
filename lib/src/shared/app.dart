@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/core/common/auth/current_user_state.dart';
 import 'package:flutter_blog_app/core/resources/resources.dart';
 import 'package:flutter_blog_app/src/auth/ux/screens/signin/signin_screen.dart';
-import 'package:flutter_blog_app/src/auth/ux/screens/signup/signup_screen.dart';
 import 'package:flutter_blog_app/src/blog/ux/screens/home/home_screen.dart';
 import 'package:flutter_blog_app/src/shared/di.dart';
 import 'package:get/get.dart';
@@ -35,7 +34,9 @@ class App extends StatelessWidget {
 class AppState extends GetxController {
   final currentUserState = Get.put(
     CurrentUserState(
-        currentUserUsecase: serviceLocator(), signoutUsecase: serviceLocator()),
+      currentUserUsecase: serviceLocator(),
+      signoutUsecase: serviceLocator(),
+    ),
   );
 
   bool isUserLoggedIn() => currentUserState.isUserLoggedIn();
