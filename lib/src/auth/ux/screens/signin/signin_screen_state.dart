@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/core/ux/widgets/snackbars.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signin_usecase.dart';
@@ -53,6 +54,7 @@ class SigninScreenState extends GetxController with NavGraph {
           );
         },
       );
+
     } else {
       loading.value = false;
       enabled.value = true;

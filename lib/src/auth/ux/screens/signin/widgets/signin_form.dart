@@ -1,4 +1,4 @@
-part of 'package:flutter_blog_app/src/auth/ux/screens/singin/signin_screen.dart';
+part of 'package:flutter_blog_app/src/auth/ux/screens/signin/signin_screen.dart';
 
 class SigninForm extends StatelessWidget with FormValidator {
   SigninForm({super.key});
