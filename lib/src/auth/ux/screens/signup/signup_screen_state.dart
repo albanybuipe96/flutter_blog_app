@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/core/common/auth/current_user_state.dart';
 import 'package:flutter_blog_app/core/ux/widgets/snackbars.dart';
 import 'package:flutter_blog_app/src/auth/platform/domain/usecases/signup_usecase.dart';
+import 'package:flutter_blog_app/src/shared/di.dart';
 import 'package:flutter_blog_app/src/shared/nav_graph.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +11,8 @@ class SignupScreenState extends GetxController with NavGraph {
       : _signupUsecase = signupUsecase;
 
   final SignupUsecase _signupUsecase;
+
+  final currentUserState = Di.injectCurrentUserState();
 
   final emailController = TextEditingController();
   final usernameController = TextEditingController();
@@ -26,6 +30,7 @@ class SignupScreenState extends GetxController with NavGraph {
   Future<void> signup() async {
     loading.value = true;
     enabled.value = false;
+    // currentUserState.
     if (signupFormKey.currentState!.validate()) {
       final response = await _signupUsecase(
         SignupParams(
@@ -49,7 +54,6 @@ class SignupScreenState extends GetxController with NavGraph {
           execute: () {
             loading.value = false;
             enabled.value = true;
-
             goToHomeScreen();
           },
         );
